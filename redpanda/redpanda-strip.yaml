@@ -1,0 +1,11 @@
+kind: Middleware
+apiVersion: traefik.containo.us/v1alpha1
+metadata:
+  name: redpanda-strip
+  namespace: vienna-poc
+spec:
+  stripPrefix:
+    prefixes:
+      - /redpanda/proxy
+      - /redpanda/kafka
+      - /redpanda/console

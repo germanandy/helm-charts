@@ -1,0 +1,21 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+
+metadata:
+  name: redpanda-console-ingress
+  namespace: vienna-poc
+
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`test-libre-stjda.eu.boehringer.com`) && PathPrefix(`/redpanda/console`)
+      services:
+        - name: redpanda-external
+          namespace: vienna-poc
+          port: 8080
+      middlewares:
+        - name: redpanda-strip
+          namespace: vienna-poc
+

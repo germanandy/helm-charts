@@ -1,0 +1,23 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+
+metadata:
+  name: redpanda-http-proxy-ingress
+  namespace: vienna-poc
+
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`test-libre-stjda.eu.boehringer.com`) && PathPrefix(`/redpanda/proxy`)
+      services:
+        - name: redpanda-external
+          namespace: vienna-poc
+          port: 8083
+      middlewares:
+        - name: redpanda-strip
+          namespace: vienna-poc
+  tls:
+    domains:
+      - main: test-libre-stjda.eu.boehringer.com
